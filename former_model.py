@@ -28,27 +28,6 @@ class up_conv_block(nn.Module):
         x = self.up(x)
         return x
 
-# class Former(nn.Module):
-#     def __init__(self, in_ch=3):
-#         super(Former, self).__init__()
-#         self.conv0=conv_block(in_ch,32,ks=1,pad=0)
-#         self.conv1 = block(32, 32)
-#         self.conv2=block(32,64)
-#         self.conv3 = block(64, 32)
-#
-#         self.conv_last = nn.Sequential(
-#             nn.Conv2d(32,1, kernel_size=1, stride=1, padding=0, bias=True),
-#             nn.Sigmoid()
-#             )
-#
-#     def forward(self, x):
-#         x=self.conv0(x)
-#         x=self.conv1(x)
-#         x = self.conv2(x)
-#         x = self.conv3(x)
-#         out=self.conv_last(x)
-#         return out
-
 class Former(nn.Module):
     def __init__(self, in_ch=3):
         super(Former, self).__init__()
@@ -100,18 +79,6 @@ class block(nn.Module):
         # x=x+cx
         # x = self.norm(x)
         return x
-
-# class block(nn.Module):
-#     def __init__(self,in_channel,out_channel,ks=3,pad=1, head_num=4):
-#         super(block, self).__init__()
-#         self.conv = conv_block(out_channel, out_channel, ks=ks, pad=pad)
-#         self.ma=MultiheadAttention(in_channel,out_channel, head_num)
-#
-#     def forward(self,x):
-#         x=self.ma(x)
-#         cx=self.conv(x)
-#         x=x+cx
-#         return x
 
 class MultiheadAttention(nn.Module):
     def __init__(self,in_channel,out_channel, head_num=4):
