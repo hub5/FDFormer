@@ -7,10 +7,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import time
-from FireFormer.former_model import Former
+from former_model import Former
 import utils
 import time
-from LossFunction.focalloss import BCEFocalLoss
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 batch_size = 256
@@ -21,10 +20,7 @@ con=config.Config
 
 def train(model):
     criterion = nn.BCELoss()
-    # criterion = nn.CrossEntropyLoss()
-    # criterion = BCEFocalLoss()
     optimizer = optim.Adam(model.parameters(), lr=4e-4)
-    # optimizer = optim.Adam(model.parameters(), lr=4e-5)
 
     epoch=0
     t0=time.time()
@@ -63,11 +59,6 @@ def train(model):
                     f1 = 2 * p * r / (p + r)
                     fa=1-p
                     print('f1:',f1,p, r,fa)
-
-                    # if (f1 > 0.90):
-                    #     # path = '/home/ices/Fire/MODIS/model/UFormer/' + str(thrd) + '_' +'layer3_' + str(epoch) + '.pth'
-                    #     path = '/home/ices/Fire/MODIS/model/UFormer/' + str(thrd) + '_' + 'layer4_' + str(epoch) + '.pth'
-                    #     torch.save(model.state_dict(), path)
 
 
             t0 = time.time()
@@ -135,8 +126,5 @@ def mytest(model):
 
 if __name__ == '__main__':
     model = Former(6)
-    # state_dict = torch.load('/home/ices/Fire/MODIS/model/UFormer/' + str(thrd) + '_' +'layer3_' + str(196) + '.pth')
-    # state_dict = torch.load('/home/ices/Fire/MODIS/model/UFormer/' + str(0.65) + '_' + 'layer4_' + str(191) + '.pth')
-    # model.load_state_dict(state_dict)
     model.cuda()
     train(model)
